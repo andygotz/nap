@@ -58,18 +58,21 @@ def execute(f, *args, **kwargs):
 
 
 def stop(wait=False):
-    return TangoWorker().stop(wait=wait)
+    worker = TangoWorker()
+    global __TANGO_WORKER
+    __TANGO_WORKER = None
+    worker.stop(wait=wait)
 
 
 if __name__ == "__main__":
 
     def f():
         print("Writting message from thread " + threading.current_thread().name)
-    
+
     import sys
     print("Tango worker will write message to stdout...")
     execute(f)
     print("Finished. This message may come before or after the 'Writting message from thread' ...")
     stop(wait=True)
-    
-    
+
+
