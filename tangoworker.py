@@ -4,9 +4,9 @@ __all__ = ["execute", "TangoWorker"]
 import logging
 import threading
 try:
-    from queue import Queue
+    import queue
 except ImportError:
-    from Queue import Queue
+    import Queue as queue
 
 class _TangoWorker(threading.Thread):
 
@@ -16,14 +16,14 @@ class _TangoWorker(threading.Thread):
         threading.Thread.__init__(self, **kwargs)
         self.__stop = False
         self.setDaemon(daemon)
-        self.tasks = Queue()
+        self.tasks = queue.Queue()
 
     def run(self):
         tasks = self.tasks
         while not self.__stop:
             try:
                 f, args, kwargs = tasks.get(timeout=0.5)
-            except Queue.Empty:
+            except queue.Empty:
                 continue
             if f is None:
                 continue
