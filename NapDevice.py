@@ -8,8 +8,8 @@ import time
         
 import tangoworker
         
-def nap(sleep, msg="Finished sleeping"):
-	time.sleep(10)
+def nap(nap_time, msg="Finished sleeping"):
+	time.sleep(nap_time)
 	print(msg)
         
 class NapDevice(Device):
