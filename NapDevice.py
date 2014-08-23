@@ -4,6 +4,7 @@
 #
 from PyTango.server import Device, DeviceMeta, run
 from PyTango.server import command
+from PyTango import DevState
 import time
 
 import tangoworker
@@ -19,6 +20,7 @@ class NapDevice(Device):
 
     @command(dtype_in=float)
     def nap(self, nap_time):
+        self.set_state(DevState.ON)
         tangoworker.execute(nap, nap_time, msg="I am finished!")
 
 
